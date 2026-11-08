@@ -1,0 +1,16 @@
+{
+  "name": "ucash",
+  "version": "2.4.0",
+  "private": true,
+  "description": "UCash - 线上小额现金贷系统（RN 客户端 + Node 服务端 + 运营后台）",
+  "scripts": {
+    "install:all": "npm --prefix apps/server install && npm --prefix apps/admin install && npm --prefix apps/mobile install",
+    "dev:server": "npm --prefix apps/server run dev",
+    "dev:admin": "npm --prefix apps/admin run dev",
+    "dev:mobile": "npm --prefix apps/mobile run web",
+    "seed": "npm --prefix apps/server run seed",
+    "reset": "npm --prefix apps/server run reset",
+    "e2e": "npm --prefix apps/server run e2e",
+    "build:admin": "npm --prefix apps/admin run build"
+  }
+}

@@ -1,0 +1,29 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 构建产物
+dist/
+build/
+apps/mobile_flutter/.dart_tool/
+apps/mobile_flutter/build/
+apps/mobile_flutter/.flutter-plugins
+apps/mobile_flutter/.flutter-plugins-dependencies
+
+# 运行数据
+apps/server/data/
+*.db
+*.db-shm
+*.db-wal
+
+# 环境与临时
+.env
+.env.local
+.tmp/
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# 本地工作数据（记忆、临时脚本、设计文件缓存）
+.workbuddy/
