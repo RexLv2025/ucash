@@ -8,6 +8,9 @@ on:
       - 'apps/mobile_flutter/**'
       - '.github/workflows/build-apk.yml'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,9 +42,30 @@ jobs:
         working-directory: apps/mobile_flutter
         run: flutter build apk --release
 
+      - name: Rename artifact
+        working-directory: apps/mobile_flutter
+        run: cp build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/ucash-2.4.0.apk
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: ucash-apk
-          path: apps/mobile_flutter/build/app/outputs/flutter-apk/app-release.apk
+          path: apps/mobile_flutter/build/app/outputs/flutter-apk/ucash-2.4.0.apk
           if-no-files-found: error
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.4.0-build${{ github.run_number }}
+          name: UCash v2.4.0 (build ${{ github.run_number }})
+          prerelease: true
+          body: |
+            UCash 安卓安装包（自动构建）
+
+            - 提交：${{ github.sha }}
+            - 构建时间：${{ github.event.repository.updated_at }}
+            - 签名：debug 签名，仅供测试安装，不可用于上架
+            - 服务端地址：安装后进入「设置 → 开发者选项」修改为你的电脑局域网 IP
+
+            安装前需在手机设置中允许「安装未知来源应用」。
+          files: apps/mobile_flutter/build/app/outputs/flutter-apk/ucash-2.4.0.apk
