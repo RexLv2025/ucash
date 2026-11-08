@@ -132,6 +132,18 @@ UCash/
 
 ## 八、构建 APK
 
+### 方式一：GitHub Actions（推荐，已配置好）
+
+```bash
+git push origin main          # 推送后自动构建
+```
+
+- 构建记录：https://github.com/RexLv2025/ucash/actions
+- 安装包下载：https://github.com/RexLv2025/ucash/releases （每次构建自动发布）
+- 也可在 Actions 页面手动 `Run workflow` 触发
+
+### 方式二：本地构建
+
 ```bash
 cd apps/mobile_flutter
 flutter build apk --release
@@ -140,7 +152,7 @@ flutter build apk --release
 
 - 正式包需替换 `android/app/build.gradle.kts` 中的签名配置（当前使用 debug 签名）
 - 上架国内应用商店需：软件著作权、ICP 备案、等保测评、金融类目资质报备
-- 打包前将 API 地址改为生产 HTTPS 域名，并移除明文流量允许配置
+- 打包前将 API 地址改为生产 HTTPS 域名（`--dart-define=API_BASE=https://api.xxx.com`），并移除明文流量允许配置
 
 ## 九、合规声明
 
