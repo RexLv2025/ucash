@@ -1,3 +1,5 @@
+> **【变更说明 2026-11-09】** 数据库驱动已由 better-sqlite3 调整为 Node 内置 **`node:sqlite`**：better-sqlite3 11.x 无 Node 24 预编译包且本机无 VS Build Tools，`npm install` 触发 node-gyp 编译失败，运行时报 `NODE_MODULE_VERSION 127/137` 不匹配。改用内置模块后，Node 22.5+ / 24 均可直接运行，零原生依赖。下文涉及 better-sqlite3 的描述以此说明为准。
+
 > **【变更说明 2026-11-08】** 客户端技术栈已由 React Native + Expo 调整为 **Flutter（Android 原生）**，详见 `docs/04-flutter-adr.md`。本文档中涉及 RN 的客户端实现细节以该 ADR 为准；业务中台、数据模型、API 契约与运营后台不受影响。
 
 # UCash 技术架构与研发方案
@@ -40,7 +42,7 @@ PRD 文档尚未落盘，为避免研发返工，本节先冻结本方案覆盖�
 | 移动端 UI | 自研组件 + theme tokens | — | 现金贷视觉强定制，组件库改造成本高于自研；规避 web 兼容坑 |
 | 服务端 | Node 22 + Express | 4.19 | 团队技术栈同构，生态成熟，单体足够支撑验证期 |
 | 服务端语言 | TypeScript 5.5（strict） | — | 与 shared 包共享类型，接口契约编译期校验 |
-| 数据库 | better-sqlite3（WAL） | 11.x | 同步 API 让事务代码线性可读，零运维；生产切 MySQL 时保留仓储层 |
+| 数据库 | **node:sqlite（WAL）** | Node 内置 | 部分 API 与 better-sqlite3 一致（prepare/get/all/run），零原生编译、零 ABI 风险；生产切 MySQL 时保留仓储层 |
 | 参数校验 | zod | 3.x | Schema 即类型，请求体/环境变量/规则 DSL 三处复用 |
 | 认证 | jsonwebtoken（HS256）+ bcrypt | — | Access 2h + Refresh 30d 轮换，符合基线 |
 | 定时任务 | node-cron | 3.x | 逾期标记、罚息计提、额度过期、消息推送，单进程足够 |
@@ -2178,7 +2180,7 @@ npm -v           # 必须 10.x
 python --version # 建议 3.11+（node-gyp 需要）
 # Windows 如无 VS Build Tools：
 # npm i -g windows-build-tools （管理员 PowerShell）或装 VS 2022 Build Tools + C++ 工作负载
-node -e "require('better-sqlite3')"   # 装完依赖后必须无报错
+node -e "require('node:sqlite').DatabaseSync"   # 装完依赖后必须无报错
 npx expo --version
 ```
 

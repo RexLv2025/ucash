@@ -7,12 +7,22 @@
 | 模块 | 目录 | 技术栈 | 端口 |
 |---|---|---|---|
 | 借款人 App | `apps/mobile_flutter` | Flutter 3.x / Dart 3.13 / Material 3 | — |
-| 业务中台 | `apps/server` | Node 22 + Express 4 + TypeScript + better-sqlite3 | 4000 |
+| 业务中台 | `apps/server` | Node 22.5+ / 24 + Express 4 + TypeScript + node:sqlite（内置，无原生依赖） | 4000 |
 | 运营后台 | `apps/admin` | Vite 5 + React 18 + TypeScript | 5173（开发）/ `/admin`（生产） |
 
 可视化规范：深藏蓝 `#0F2B5B` 主色 + 香槟金 `#C9A45C` 强调 + `#F5F6F8` 页面底 + 白色圆角卡片，语义色成功绿 / 警示红，与 `design-preview/` 七张设计稿一致。
 
 ## 二、快速启动
+
+### 环境要求
+
+| 依赖 | 版本 | 说明 |
+|---|---|---|
+| Node.js | **≥ 22.5（推荐 24 LTS）** | 数据库使用 Node 内置 `node:sqlite`，不依赖任何原生编译模块，换 Node 版本无需重编译 |
+| Flutter | 3.x | 仅客户端需要，服务端与后台不需要 |
+| JDK | 17 | 仅打包 APK 需要 |
+
+> 历史说明：早期版本使用 better-sqlite3，在 Node 24 下会因 `NODE_MODULE_VERSION` ABI 不匹配启动失败，已改用 `node:sqlite` 彻底规避。
 
 ```bash
 # 1. 安装依赖（首次）

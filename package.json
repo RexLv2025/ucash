@@ -2,15 +2,20 @@
   "name": "ucash",
   "version": "2.4.0",
   "private": true,
-  "description": "UCash - 线上小额现金贷系统（RN 客户端 + Node 服务端 + 运营后台）",
+  "description": "UCash - 线上小额现金贷系统（Flutter 客户端 + Node 服务端 + 运营后台）",
+  "engines": {
+    "node": ">=22.5 <27"
+  },
   "scripts": {
-    "install:all": "npm --prefix apps/server install && npm --prefix apps/admin install && npm --prefix apps/mobile install",
+    "install:all": "npm --prefix apps/server install && npm --prefix apps/admin install",
     "dev:server": "npm --prefix apps/server run dev",
     "dev:admin": "npm --prefix apps/admin run dev",
-    "dev:mobile": "npm --prefix apps/mobile run web",
+    "dev:mobile": "cd apps/mobile_flutter && flutter run",
     "seed": "npm --prefix apps/server run seed",
     "reset": "npm --prefix apps/server run reset",
     "e2e": "npm --prefix apps/server run e2e",
-    "build:admin": "npm --prefix apps/admin run build"
+    "typecheck": "npm --prefix apps/server run typecheck",
+    "build:admin": "npm --prefix apps/admin run build",
+    "build:apk": "cd apps/mobile_flutter && flutter build apk --release"
   }
 }

@@ -34,7 +34,7 @@ function wipe() {
     'admins',
     'settings',
   ];
-  db.pragma('foreign_keys = OFF');
+  db.exec('PRAGMA foreign_keys = OFF');
   for (const t of tables) {
     try {
       db.prepare(`DELETE FROM ${t}`).run();
@@ -43,7 +43,7 @@ function wipe() {
       /* ignore */
     }
   }
-  db.pragma('foreign_keys = ON');
+  db.exec('PRAGMA foreign_keys = ON');
 }
 
 function seedSettings() {
